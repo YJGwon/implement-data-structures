@@ -16,6 +16,10 @@ public class Node<T> {
         return (Node<T>) EMPTY_NODE;
     }
 
+    public void linkNext(final Node<T> next) {
+        this.next = next;
+    }
+
     public T getValue() {
         return value;
     }
