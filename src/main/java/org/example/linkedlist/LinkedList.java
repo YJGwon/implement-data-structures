@@ -36,6 +36,24 @@ public class LinkedList<E> {
         numberOfElements++;
     }
 
+    public void add(final int index, final E element) {
+        if (index == 0) {
+            addFirst(element);
+            return;
+        }
+        if (index == size()) {
+            addLast(element);
+            return;
+        }
+
+        final Node<E> old = getNode(index);
+        final Node<E> prev = old.prev;
+        final Node<E> nodeToAdd = new Node<>(element, prev, old);
+        prev.next = nodeToAdd;
+        old.prev = nodeToAdd;
+        numberOfElements++;
+    }
+
     public E getFirst() {
         checkElementExists();
         return head.getValue();
@@ -47,6 +65,19 @@ public class LinkedList<E> {
     }
 
     public E get(final int index) {
+        final Node<E> found = getNode(index);
+        return found.getValue();
+    }
+
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    public int size() {
+        return numberOfElements;
+    }
+
+    private Node<E> getNode(final int index) {
         checkIndex(index);
         Node<E> current;
         if (index < size() / 2) {
@@ -60,16 +91,7 @@ public class LinkedList<E> {
                 current = current.prev;
             }
         }
-
-        return current.getValue();
-    }
-
-    public boolean isEmpty() {
-        return size() == 0;
-    }
-
-    public int size() {
-        return numberOfElements;
+        return current;
     }
 
     private void checkElementExists() {

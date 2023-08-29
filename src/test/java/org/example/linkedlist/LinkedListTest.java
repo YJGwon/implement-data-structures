@@ -73,5 +73,37 @@ class LinkedListTest {
             assertThatExceptionOfType(IndexOutOfBoundsException.class)
                     .isThrownBy(() -> linkedList.get(0));
         }
+
+    }
+
+    @DisplayName("특정 위치 원소 삽입")
+    @Nested
+    class add {
+
+        @DisplayName("특정 위치에 원소를 추가한다.")
+        @Test
+        void success() {
+            // given
+            final LinkedList<String> linkedList = new LinkedList<>();
+            linkedList.addLast("data1");
+            linkedList.addLast("data2");
+
+            // when
+            linkedList.add(1, "data3");
+
+            // then
+            assertThat(linkedList.get(1)).isEqualTo("data3");
+        }
+
+        @DisplayName("인덱스가 범위를 벗어나면 예외가 발생한다.")
+        @Test
+        void throwsException_whenIndexOutOfBound() {
+            // given
+            final LinkedList<String> linkedList = new LinkedList<>();
+
+            // when & then
+            assertThatExceptionOfType(IndexOutOfBoundsException.class)
+                    .isThrownBy(() -> linkedList.add(1, "data"));
+        }
     }
 }
