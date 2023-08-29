@@ -5,22 +5,18 @@ public class Node<T> {
     private static final Node<Object> EMPTY_NODE = new Node<>(null, null);
 
     private final T value;
-    private Node<T> next;
+    Node<T> next;
 
     public Node(final T value, final Node<T> next) {
         this.value = value;
         this.next = next;
     }
 
-    public static <T> Node<T> ofEmpty() {
+    static <T> Node<T> ofEmpty() {
         return (Node<T>) EMPTY_NODE;
     }
 
-    public void linkNext(final Node<T> next) {
-        this.next = next;
-    }
-
-    public T getValue() {
+    T getValue() {
         return value;
     }
 }
