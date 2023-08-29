@@ -16,15 +16,17 @@ public class LinkedList<E> {
 
     public void addFirst(final E element) {
         final Node<E> nodeToAdd = new Node<>(element, head);
-        head = nodeToAdd;
         if (isEmpty()) {
             tail = nodeToAdd;
+        } else {
+            head.prev = nodeToAdd;
         }
+        head = nodeToAdd;
         numberOfElements++;
     }
 
     public void addLast(final E element) {
-        final Node<E> nodeToAdd = new Node<>(element, Node.ofEmpty());
+        final Node<E> nodeToAdd = new Node<>(element, tail, Node.ofEmpty());
         if (isEmpty()) {
             head = nodeToAdd;
         } else {
@@ -46,10 +48,19 @@ public class LinkedList<E> {
 
     public E get(final int index) {
         checkIndex(index);
-        Node<E> current = head;
-        for (int i = 0; i < index; i++) {
-            current = current.next;
+        Node<E> current;
+        if (index < size() / 2) {
+            current = head;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+            }
+        } else {
+            current = tail;
+            for (int i = size() - 1; i > index; i--) {
+                current = current.prev;
+            }
         }
+
         return current.getValue();
     }
 
