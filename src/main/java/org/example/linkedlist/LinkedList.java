@@ -69,6 +69,16 @@ public class LinkedList<E> {
         return removedValue;
     }
 
+    public E removeLast() {
+        checkElementExists();
+        final E removedValue = tail.getValue();
+        final Node<E> nodeToBeTail = tail.prev;
+        nodeToBeTail.next = Node.ofEmpty();
+        tail = nodeToBeTail;
+        numberOfElements--;
+        return removedValue;
+    }
+
     public E getFirst() {
         checkElementExists();
         return head.getValue();

@@ -148,15 +148,16 @@ class LinkedListTest {
         void success() {
             // given
             final LinkedList<String> linkedList = new LinkedList<>();
-            linkedList.addFirst("data");
+            linkedList.addLast("data1");
+            linkedList.addLast("data2");
 
             // when
             final String removed = linkedList.removeFirst();
 
             // then
             assertAll(
-                    () -> assertThat(removed).isEqualTo("data"),
-                    () -> assertThat(linkedList.isEmpty()).isTrue()
+                    () -> assertThat(removed).isEqualTo("data1"),
+                    () -> assertThat(linkedList.size()).isOne()
             );
         }
 
@@ -169,6 +170,40 @@ class LinkedListTest {
             // when & then
             assertThatExceptionOfType(NoSuchElementException.class)
                     .isThrownBy(emptyList::removeFirst);
+        }
+    }
+
+    @DisplayName("맨 뒤의 원소 삭제")
+    @Nested
+    class removeLast {
+
+        @DisplayName("맨 뒤의 원소를 삭제한다.")
+        @Test
+        void success() {
+            // given
+            final LinkedList<String> linkedList = new LinkedList<>();
+            linkedList.addLast("data1");
+            linkedList.addLast("data2");
+
+            // when
+            final String removed = linkedList.removeLast();
+
+            // then
+            assertAll(
+                    () -> assertThat(removed).isEqualTo("data2"),
+                    () -> assertThat(linkedList.size()).isOne()
+            );
+        }
+
+        @DisplayName("원소가 존재하지 않으면 예외가 발생한다.")
+        @Test
+        void throwsException_whenNoElement() {
+            // given
+            final LinkedList<String> emptyList = new LinkedList<>();
+
+            // when & then
+            assertThatExceptionOfType(NoSuchElementException.class)
+                    .isThrownBy(emptyList::removeLast);
         }
     }
 }
