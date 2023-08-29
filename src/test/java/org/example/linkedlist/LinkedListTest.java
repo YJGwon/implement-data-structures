@@ -106,4 +106,35 @@ class LinkedListTest {
                     .isThrownBy(() -> linkedList.add(1, "data"));
         }
     }
+
+    @DisplayName("특정 위치 원소 변경")
+    @Nested
+    class set {
+
+        @DisplayName("특정 위치의 원소를 변경한다.")
+        @Test
+        void success() {
+            // given
+            final LinkedList<String> linkedList = new LinkedList<>();
+            linkedList.addLast("data1");
+            linkedList.addLast("data2");
+
+            // when
+            linkedList.set(1, "changed");
+
+            // then
+            assertThat(linkedList.getLast()).isEqualTo("changed");
+        }
+
+        @DisplayName("인덱스가 범위를 벗어나면 예외가 발생한다.")
+        @Test
+        void throwsException_whenIndexOutOfBound() {
+            // given
+            final LinkedList<String> linkedList = new LinkedList<>();
+
+            // when & then
+            assertThatExceptionOfType(IndexOutOfBoundsException.class)
+                    .isThrownBy(() -> linkedList.set(0, "data"));
+        }
+    }
 }

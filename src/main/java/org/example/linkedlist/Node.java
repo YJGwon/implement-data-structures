@@ -4,7 +4,7 @@ public class Node<T> {
 
     private static final Node<Object> EMPTY_NODE = new Node<>(null, null);
 
-    private final T value;
+    private T value;
     Node<T> prev;
     Node<T> next;
 
@@ -24,5 +24,9 @@ public class Node<T> {
 
     T getValue() {
         return value;
+    }
+
+    void setValue(final T value) {
+        this.value = value;
     }
 }

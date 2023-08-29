@@ -54,6 +54,11 @@ public class LinkedList<E> {
         numberOfElements++;
     }
 
+    public void set(final int index, final E element) {
+        final Node<E> node = getNode(index);
+        node.setValue(element);
+    }
+
     public E getFirst() {
         checkElementExists();
         return head.getValue();
