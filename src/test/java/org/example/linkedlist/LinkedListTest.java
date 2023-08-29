@@ -206,4 +206,40 @@ class LinkedListTest {
                     .isThrownBy(emptyList::removeLast);
         }
     }
+
+    @DisplayName("특정 위치 원소 삭제")
+    @Nested
+    class remove {
+
+        @DisplayName("특정 위치의 원소를 삭제한다.")
+        @Test
+        void success() {
+            // given
+            final LinkedList<String> linkedList = new LinkedList<>();
+            linkedList.addLast("data1");
+            linkedList.addLast("data2");
+            linkedList.addLast("data3");
+
+            // when
+            final String removed = linkedList.remove(1);
+
+            // then
+            assertAll(
+                    () -> assertThat(removed).isEqualTo("data2"),
+                    () -> assertThat(linkedList.size()).isEqualTo(2)
+            );
+        }
+
+        @DisplayName("원소가 존재하지 않으면 예외가 발생한다.")
+        @Test
+        void throwsException_whenIndexOutOfBound() {
+            // given
+            final LinkedList<String> linkedList = new LinkedList<>();
+            linkedList.addLast("data");
+
+            // when & then
+            assertThatExceptionOfType(IndexOutOfBoundsException.class)
+                    .isThrownBy(() -> linkedList.remove(1));
+        }
+    }
 }

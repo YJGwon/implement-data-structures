@@ -79,6 +79,24 @@ public class LinkedList<E> {
         return removedValue;
     }
 
+    public E remove(final int index) {
+        if (index == 0) {
+            return removeFirst();
+        }
+        if (index == size() - 1) {
+            return removeLast();
+        }
+
+        final Node<E> removedNode = getNode(index);
+        final E removedValue = removedNode.getValue();
+        final Node<E> prevToRemoved = removedNode.prev;
+        final Node<E> nextToRemoved = removedNode.next;
+        prevToRemoved.next = nextToRemoved;
+        nextToRemoved.prev = prevToRemoved;
+        numberOfElements--;
+        return removedValue;
+    }
+
     public E getFirst() {
         checkElementExists();
         return head.getValue();
