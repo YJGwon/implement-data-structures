@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -67,11 +68,11 @@ class LinkedListTest {
         @Test
         void throwsException_whenIndexOutOfBound() {
             // given
-            final LinkedList<String> linkedList = new LinkedList<>();
+            final LinkedList<String> emptyList = new LinkedList<>();
 
             // when & then
             assertThatExceptionOfType(IndexOutOfBoundsException.class)
-                    .isThrownBy(() -> linkedList.get(0));
+                    .isThrownBy(() -> emptyList.get(0));
         }
 
     }
@@ -99,11 +100,11 @@ class LinkedListTest {
         @Test
         void throwsException_whenIndexOutOfBound() {
             // given
-            final LinkedList<String> linkedList = new LinkedList<>();
+            final LinkedList<String> emptyList = new LinkedList<>();
 
             // when & then
             assertThatExceptionOfType(IndexOutOfBoundsException.class)
-                    .isThrownBy(() -> linkedList.add(1, "data"));
+                    .isThrownBy(() -> emptyList.add(1, "data"));
         }
     }
 
@@ -130,11 +131,44 @@ class LinkedListTest {
         @Test
         void throwsException_whenIndexOutOfBound() {
             // given
-            final LinkedList<String> linkedList = new LinkedList<>();
+            final LinkedList<String> emptyList = new LinkedList<>();
 
             // when & then
             assertThatExceptionOfType(IndexOutOfBoundsException.class)
-                    .isThrownBy(() -> linkedList.set(0, "data"));
+                    .isThrownBy(() -> emptyList.set(0, "data"));
+        }
+    }
+
+    @DisplayName("맨 앞의 원소 삭제")
+    @Nested
+    class removeFirst {
+
+        @DisplayName("맨 앞의 원소를 삭제한다.")
+        @Test
+        void success() {
+            // given
+            final LinkedList<String> linkedList = new LinkedList<>();
+            linkedList.addFirst("data");
+
+            // when
+            final String removed = linkedList.removeFirst();
+
+            // then
+            assertAll(
+                    () -> assertThat(removed).isEqualTo("data"),
+                    () -> assertThat(linkedList.isEmpty()).isTrue()
+            );
+        }
+
+        @DisplayName("원소가 존재하지 않으면 예외가 발생한다.")
+        @Test
+        void throwsException_whenNoElement() {
+            // given
+            final LinkedList<String> emptyList = new LinkedList<>();
+
+            // when & then
+            assertThatExceptionOfType(NoSuchElementException.class)
+                    .isThrownBy(emptyList::removeFirst);
         }
     }
 }

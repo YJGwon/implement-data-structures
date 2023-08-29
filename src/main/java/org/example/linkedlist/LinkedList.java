@@ -59,6 +59,16 @@ public class LinkedList<E> {
         node.setValue(element);
     }
 
+    public E removeFirst() {
+        checkElementExists();
+        final E removedValue = head.getValue();
+        final Node<E> nodeToBeHead = head.next;
+        nodeToBeHead.prev = Node.ofEmpty();
+        head = nodeToBeHead;
+        numberOfElements--;
+        return removedValue;
+    }
+
     public E getFirst() {
         checkElementExists();
         return head.getValue();
