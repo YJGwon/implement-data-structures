@@ -34,7 +34,8 @@ public class FixedQueue<E> implements Queue<E> {
 
     @Override
     public E peek() {
-        return null;
+        checkEmpty();
+        return elements[first];
     }
 
     @Override
