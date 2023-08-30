@@ -24,7 +24,15 @@ public class FlexibleQueue<E> implements Queue<E> {
 
     @Override
     public E dequeue() {
-        return null;
+        checkEmpty();
+        final Node<E> removedNode = tail.next;
+        if (removedNode == tail) {
+            tail = Node.ofEmpty();
+        } else {
+            tail.next = removedNode.next;
+        }
+        numberOfElements--;
+        return removedNode.value;
     }
 
     @Override
@@ -40,6 +48,12 @@ public class FlexibleQueue<E> implements Queue<E> {
     @Override
     public int size() {
         return numberOfElements;
+    }
+
+    private void checkEmpty() {
+        if (isEmpty()) {
+            throw new EmptyQueueException();
+        }
     }
 
     private static class Node<E> {
