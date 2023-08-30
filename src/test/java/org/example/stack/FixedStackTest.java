@@ -3,6 +3,7 @@ package org.example.stack;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import java.util.EmptyStackException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ class FixedStackTest {
     @Nested
     class push {
 
-        @DisplayName("고정 크기 스택의 맨 위에 원소를 삽입한다.")
+        @DisplayName("고정 크기 스택의 마지막에 원소를 삽입한다.")
         @Test
         void success() {
             // given
@@ -36,6 +37,36 @@ class FixedStackTest {
             // when & then
             assertThatExceptionOfType(FullStackException.class)
                     .isThrownBy(() -> fullStack.push("data2"));
+        }
+    }
+
+    @DisplayName("원소 삭제")
+    @Nested
+    class pop {
+
+        @DisplayName("마지막 원소를 삭제하고 값을 반환한다.")
+        @Test
+        void success() {
+            // given
+            final Stack<String> stack = new FixedStack<>(1);
+            stack.push("data");
+
+            // when
+            final String popped = stack.pop();
+
+            // then
+            assertThat(popped).isEqualTo("data");
+        }
+
+        @DisplayName("빈 스택의 값을 삭제하면 예외가 발생한다..")
+        @Test
+        void throwsException_whenStackIsEmpty() {
+            // given
+            final Stack<String> emptyStack = new FixedStack<>(1);
+
+            // when & then
+            assertThatExceptionOfType(EmptyStackException.class)
+                    .isThrownBy(emptyStack::pop);
         }
     }
 }

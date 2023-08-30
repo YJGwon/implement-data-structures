@@ -1,5 +1,7 @@
 package org.example.stack;
 
+import java.util.EmptyStackException;
+
 public class FixedStack<E> implements Stack<E> {
 
     private final E[] elements;
@@ -20,7 +22,9 @@ public class FixedStack<E> implements Stack<E> {
 
     @Override
     public E pop() {
-        return null;
+        checkEmpty();
+        numberOfElements--;
+        return elements[numberOfElements];
     }
 
     @Override
@@ -30,7 +34,7 @@ public class FixedStack<E> implements Stack<E> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return numberOfElements == 0;
     }
 
     @Override
@@ -47,6 +51,12 @@ public class FixedStack<E> implements Stack<E> {
     private void checkSize() {
         if (numberOfElements == elements.length) {
             throw new FullStackException();
+        }
+    }
+
+    private void checkEmpty() {
+        if (isEmpty()) {
+            throw new EmptyStackException();
         }
     }
 }
