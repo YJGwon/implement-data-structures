@@ -29,7 +29,8 @@ public class FlexibleStack<E> implements Stack<E> {
 
     @Override
     public E peek() {
-        return null;
+        checkEmpty();
+        return tail.value;
     }
 
     @Override

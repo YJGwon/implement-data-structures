@@ -52,4 +52,34 @@ class FlexibleStackTest {
                     .isThrownBy(emptyStack::pop);
         }
     }
+
+    @DisplayName("마지막에 삽입된 원소 조회")
+    @Nested
+    class peek {
+
+        @DisplayName("마지막에 삽입된 원소의 값을 조회한다.")
+        @Test
+        void success() {
+            // given
+            final Stack<String> stack = new FlexibleStack<>();
+            stack.push("data");
+
+            // when
+            final String peeked = stack.peek();
+
+            // then
+            assertThat(peeked).isEqualTo("data");
+        }
+
+        @DisplayName("빈 스택에서 원소를 조회하면 예외가 발생한다.")
+        @Test
+        void throwsException_whenStackIsEmpty() {
+            // given
+            final Stack<String> emptyStack = new FlexibleStack<>();
+
+            // when & then
+            assertThatExceptionOfType(EmptyStackException.class)
+                    .isThrownBy(emptyStack::peek);
+        }
+    }
 }
