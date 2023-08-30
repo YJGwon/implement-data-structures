@@ -37,7 +37,9 @@ public class FlexibleQueue<E> implements Queue<E> {
 
     @Override
     public E peek() {
-        return null;
+        checkEmpty();
+        final Node<E> head = tail.next;
+        return head.value;
     }
 
     @Override

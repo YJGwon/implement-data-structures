@@ -52,4 +52,35 @@ class FlexibleQueueTest {
                     .isThrownBy(emptyQueue::dequeue);
         }
     }
+
+    @DisplayName("가장 먼저 추가된 원소 조회")
+    @Nested
+    class peek {
+
+        @DisplayName("가장 먼저 추가된 원소의 값을 조회한다.")
+        @Test
+        void success() {
+            // given
+            final Queue<String> queue = new FlexibleQueue<>();
+            queue.enqueue("data1");
+            queue.enqueue("data2");
+
+            // when
+            final String peeked = queue.peek();
+
+            // then
+            assertThat(peeked).isEqualTo("data1");
+        }
+
+        @DisplayName("빈 큐의 값을 조회하면 예외가 발생한다.")
+        @Test
+        void throwsException_whenQueueIsEmpty() {
+            // given
+            final Queue<String> emptyQueue = new FlexibleQueue<>();
+
+            // when & then
+            assertThatExceptionOfType(EmptyQueueException.class)
+                    .isThrownBy(emptyQueue::peek);
+        }
+    }
 }
