@@ -48,14 +48,15 @@ class FixedStackTest {
         @Test
         void success() {
             // given
-            final Stack<String> stack = new FixedStack<>(1);
-            stack.push("data");
+            final Stack<String> stack = new FixedStack<>(2);
+            stack.push("data1");
+            stack.push("data2");
 
             // when
             final String popped = stack.pop();
 
             // then
-            assertThat(popped).isEqualTo("data");
+            assertThat(popped).isEqualTo("data2");
         }
 
         @DisplayName("빈 스택의 값을 삭제하면 예외가 발생한다..")
@@ -78,14 +79,15 @@ class FixedStackTest {
         @Test
         void success() {
             // given
-            final Stack<String> stack = new FixedStack<>(1);
-            stack.push("data");
+            final Stack<String> stack = new FixedStack<>(2);
+            stack.push("data1");
+            stack.push("data2");
 
             // when
             final String peeked = stack.peek();
 
             // then
-            assertThat(peeked).isEqualTo("data");
+            assertThat(peeked).isEqualTo("data2");
         }
 
         @DisplayName("빈 스택의 값을 조회하면 예외가 발생한다..")
