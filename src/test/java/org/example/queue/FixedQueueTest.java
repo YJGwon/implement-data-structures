@@ -38,4 +38,35 @@ class FixedQueueTest {
                     .isThrownBy(() -> fullQueue.enqueue("data"));
         }
     }
+
+    @DisplayName("가장 먼저 추가된 원소 삭제")
+    @Nested
+    class dequeue {
+
+        @DisplayName("가장 먼저 추가된 원소를 삭제하고 값을 return한다.")
+        @Test
+        void success() {
+            // given
+            final Queue<String> queue = new FixedQueue<>(2);
+            queue.enqueue("data1");
+            queue.enqueue("data2");
+
+            // when
+            final String dequeued = queue.dequeue();
+
+            // then
+            assertThat(dequeued).isEqualTo("data1");
+        }
+
+        @DisplayName("빈 큐의 원소를 삭제하면 예외가 발생한다.")
+        @Test
+        void throwsException_whenQueueIsEmpty() {
+            // given
+            final Queue<String> emptyQueue = new FixedQueue<>(1);
+
+            // when & then
+            assertThatExceptionOfType(EmptyQueueException.class)
+                    .isThrownBy(emptyQueue::dequeue);
+        }
+    }
 }
