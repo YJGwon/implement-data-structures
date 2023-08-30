@@ -1,5 +1,7 @@
 package org.example.stack;
 
+import java.util.EmptyStackException;
+
 public class FlexibleStack<E> implements Stack<E> {
 
     private Node<E> tail;
@@ -18,7 +20,11 @@ public class FlexibleStack<E> implements Stack<E> {
 
     @Override
     public E pop() {
-        return null;
+        checkEmpty();
+        final Node<E> removedNode = tail;
+        tail = tail.prev;
+        numberOfElements--;
+        return removedNode.value;
     }
 
     @Override
@@ -28,12 +34,18 @@ public class FlexibleStack<E> implements Stack<E> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size() == 0;
     }
 
     @Override
     public int size() {
         return numberOfElements;
+    }
+
+    private void checkEmpty() {
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
     }
 
     private static class Node<E> {
