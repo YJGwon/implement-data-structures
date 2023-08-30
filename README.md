@@ -2,3 +2,4 @@
 
 
 - [LinkedList](https://github.com/YJGwon/implement-data-structures/pull/1)
+- [Stack](https://github.com/YJGwon/implement-data-structures/pull/2)
