@@ -56,12 +56,12 @@ public class LinkedList<E> {
 
     public void set(final int index, final E element) {
         final Node<E> node = getNode(index);
-        node.setValue(element);
+        node.value = element;
     }
 
     public E removeFirst() {
         checkElementExists();
-        final E removedValue = head.getValue();
+        final E removedValue = head.value;
         final Node<E> nodeToBeHead = head.next;
         nodeToBeHead.prev = Node.ofEmpty();
         head = nodeToBeHead;
@@ -71,7 +71,7 @@ public class LinkedList<E> {
 
     public E removeLast() {
         checkElementExists();
-        final E removedValue = tail.getValue();
+        final E removedValue = tail.value;
         final Node<E> nodeToBeTail = tail.prev;
         nodeToBeTail.next = Node.ofEmpty();
         tail = nodeToBeTail;
@@ -88,7 +88,7 @@ public class LinkedList<E> {
         }
 
         final Node<E> removedNode = getNode(index);
-        final E removedValue = removedNode.getValue();
+        final E removedValue = removedNode.value;
         final Node<E> prevToRemoved = removedNode.prev;
         final Node<E> nextToRemoved = removedNode.next;
         prevToRemoved.next = nextToRemoved;
@@ -99,17 +99,17 @@ public class LinkedList<E> {
 
     public E getFirst() {
         checkElementExists();
-        return head.getValue();
+        return head.value;
     }
 
     public E getLast() {
         checkElementExists();
-        return tail.getValue();
+        return tail.value;
     }
 
     public E get(final int index) {
         final Node<E> found = getNode(index);
-        return found.getValue();
+        return found.value;
     }
 
     public boolean isEmpty() {
@@ -146,6 +146,29 @@ public class LinkedList<E> {
     private void checkIndex(final int index) {
         if (index < 0 || size() <= index) {
             throw new IndexOutOfBoundsException();
+        }
+    }
+
+    private static class Node<T> {
+
+        private static final Node<Object> EMPTY_NODE = new Node<>(null, null);
+
+        T value;
+        Node<T> prev;
+        Node<T> next;
+
+        public Node(final T value, final Node<T> next) {
+            this(value, ofEmpty(), next);
+        }
+
+        public Node(final T value, final Node<T> prev, final Node<T> next) {
+            this.value = value;
+            this.prev = prev;
+            this.next = next;
+        }
+
+        static <T> Node<T> ofEmpty() {
+            return (Node<T>) EMPTY_NODE;
         }
     }
 }
