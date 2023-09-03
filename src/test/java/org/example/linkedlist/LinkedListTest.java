@@ -45,11 +45,11 @@ class LinkedListTest {
         );
     }
 
-    @DisplayName("특정 위치 원소 반환")
+    @DisplayName("특정 위치 원소 조회")
     @Nested
     class get {
 
-        @DisplayName("특정 위치의 원소를 반환한다.")
+        @DisplayName("할 수 있다.")
         @Test
         void success() {
             // given
@@ -64,7 +64,7 @@ class LinkedListTest {
             assertThat(found).isEqualTo("data2");
         }
 
-        @DisplayName("인덱스가 범위를 벗어나면 예외가 발생한다.")
+        @DisplayName("할 때, 인덱스가 범위를 벗어나면 예외가 발생한다.")
         @Test
         void throwsException_whenIndexOutOfBound() {
             // given
@@ -81,7 +81,7 @@ class LinkedListTest {
     @Nested
     class add {
 
-        @DisplayName("특정 위치에 원소를 추가한다.")
+        @DisplayName("할 수 있다.")
         @Test
         void success() {
             // given
@@ -96,7 +96,7 @@ class LinkedListTest {
             assertThat(linkedList.get(1)).isEqualTo("data3");
         }
 
-        @DisplayName("인덱스가 범위를 벗어나면 예외가 발생한다.")
+        @DisplayName("할 때, 인덱스가 범위를 벗어나면 예외가 발생한다.")
         @Test
         void throwsException_whenIndexOutOfBound() {
             // given
@@ -112,7 +112,7 @@ class LinkedListTest {
     @Nested
     class set {
 
-        @DisplayName("특정 위치의 원소를 변경한다.")
+        @DisplayName("할 수 있다.")
         @Test
         void success() {
             // given
@@ -127,7 +127,7 @@ class LinkedListTest {
             assertThat(linkedList.getLast()).isEqualTo("changed");
         }
 
-        @DisplayName("인덱스가 범위를 벗어나면 예외가 발생한다.")
+        @DisplayName("할 때, 인덱스가 범위를 벗어나면 예외가 발생한다.")
         @Test
         void throwsException_whenIndexOutOfBound() {
             // given
@@ -143,7 +143,7 @@ class LinkedListTest {
     @Nested
     class removeFirst {
 
-        @DisplayName("맨 앞의 원소를 삭제한다.")
+        @DisplayName("할 수 있다.")
         @Test
         void success() {
             // given
@@ -161,7 +161,7 @@ class LinkedListTest {
             );
         }
 
-        @DisplayName("원소가 존재하지 않으면 예외가 발생한다.")
+        @DisplayName("할 때, 원소가 존재하지 않으면 예외가 발생한다.")
         @Test
         void throwsException_whenNoElement() {
             // given
@@ -177,7 +177,7 @@ class LinkedListTest {
     @Nested
     class removeLast {
 
-        @DisplayName("맨 뒤의 원소를 삭제한다.")
+        @DisplayName("할 수 있다.")
         @Test
         void success() {
             // given
@@ -195,7 +195,7 @@ class LinkedListTest {
             );
         }
 
-        @DisplayName("원소가 존재하지 않으면 예외가 발생한다.")
+        @DisplayName("할 때, 원소가 존재하지 않으면 예외가 발생한다.")
         @Test
         void throwsException_whenNoElement() {
             // given
@@ -211,7 +211,7 @@ class LinkedListTest {
     @Nested
     class remove {
 
-        @DisplayName("특정 위치의 원소를 삭제한다.")
+        @DisplayName("할 수 있다.")
         @Test
         void success() {
             // given
@@ -230,7 +230,7 @@ class LinkedListTest {
             );
         }
 
-        @DisplayName("원소가 존재하지 않으면 예외가 발생한다.")
+        @DisplayName("할 때, 원소가 존재하지 않으면 예외가 발생한다.")
         @Test
         void throwsException_whenIndexOutOfBound() {
             // given

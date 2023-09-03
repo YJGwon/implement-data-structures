@@ -14,7 +14,7 @@ class FixedQueueTest {
     @Nested
     class enqueue {
 
-        @DisplayName("원소를 삽입한다.")
+        @DisplayName("할 수 있다.")
         @Test
         void success() {
             // given
@@ -27,7 +27,7 @@ class FixedQueueTest {
             assertThat(queue.size()).isOne();
         }
 
-        @DisplayName("큐가 꽉 찬 상태에서 원소를 삽입하면 예외가 발생한다.")
+        @DisplayName("할 때, 큐가 꽉 차있으면 예외가 발생한다.")
         @Test
         void throwsException_whenQueueIsFull() {
             // given
@@ -39,7 +39,7 @@ class FixedQueueTest {
                     .isThrownBy(() -> fullQueue.enqueue("data"));
         }
 
-        @DisplayName("꽉 찬 큐에서 원소를 삭제한 뒤 다시 원소를 삽입한다.")
+        @DisplayName("을 꽉 찬 큐에서 원소를 삭제한 뒤 다시 할 수 있다.")
         @Test
         void afterDequeueFromFullQueue() {
             // given
@@ -62,7 +62,7 @@ class FixedQueueTest {
     @Nested
     class dequeue {
 
-        @DisplayName("가장 먼저 추가된 원소를 삭제하고 값을 return한다.")
+        @DisplayName("하면 삭제된 값을 return한다.")
         @Test
         void success() {
             // given
@@ -77,7 +77,7 @@ class FixedQueueTest {
             assertThat(dequeued).isEqualTo("data1");
         }
 
-        @DisplayName("빈 큐의 원소를 삭제하면 예외가 발생한다.")
+        @DisplayName("할 때 큐가 비어있으면 예외가 발생한다.")
         @Test
         void throwsException_whenQueueIsEmpty() {
             // given
@@ -93,7 +93,7 @@ class FixedQueueTest {
     @Nested
     class peek {
 
-        @DisplayName("가장 먼저 추가된 원소의 값을 조회한다.")
+        @DisplayName("할 수 있다.")
         @Test
         void success() {
             // given
@@ -108,7 +108,7 @@ class FixedQueueTest {
             assertThat(peeked).isEqualTo("data1");
         }
 
-        @DisplayName("빈 큐의 원소를 조회하면 예외가 발생한다.")
+        @DisplayName("할 때 큐가 비어있으면 예외가 발생한다.")
         @Test
         void throwsException_whenQueueIsEmpty() {
             // given
