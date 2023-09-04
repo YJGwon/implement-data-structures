@@ -37,7 +37,9 @@ public class LinearProbingHashTable<K, V> implements HashTable<K, V> {
             return null;
         }
         bucket[targetIndex] = null;
+        rearrangeFollowingEntries(targetIndex);
         numberOfElements--;
+
         return entryToRemove.getValue();
     }
 
@@ -75,6 +77,23 @@ public class LinearProbingHashTable<K, V> implements HashTable<K, V> {
     public int size() {
         return numberOfElements;
     }
+
+    private void rearrangeFollowingEntries(final int targetIndex) {
+        int indexToRearrange = targetIndex + 1;
+        while (indexToRearrange < bucket.length) {
+            final Entry<K, V> entryToRearrange = bucket[indexToRearrange];
+            if (entryToRearrange == null) { // no more following entries
+                break;
+            }
+            final int availableIndex = findAvailableIndex(entryToRearrange.getKey());
+            if (indexToRearrange == availableIndex) { // already in right place
+                break;
+            }
+            bucket[availableIndex] = entryToRearrange;
+            indexToRearrange++;
+        }
+    }
+
 
     // FIXME: may return bucket.length if no bucket available - but will be fixed after adding dynamic resizing
     private int findAvailableIndex(final K key) {
