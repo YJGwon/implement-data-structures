@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -120,6 +121,34 @@ class LinearProbingHashTableTest {
         }
     }
 
+    @DisplayName("해시가 충돌해도 값을 저장할 수 있다.")
+    @Test
+    void collision() {
+        // given
+        final LinearProbingHashTable<FixedHashKey, String> hashTable = new LinearProbingHashTable<>();
+
+        final FixedHashKey key1 = new FixedHashKey(1);
+        final String value1 = "one";
+
+        final FixedHashKey key2 = new FixedHashKey(2);
+        final String value2 = "two";
+
+        hashTable.put(key1, value1);
+        hashTable.put(key2, value2);
+
+        // when
+        final String actual1 = hashTable.get(key1);
+        final String actual2 = hashTable.get(key2);
+
+        // then
+        assertAll(
+                () -> assertThat(Objects.hash(key1)).isEqualTo(Objects.hash(key2)), // hash collision
+                () -> assertThat(key1).isNotEqualTo(key2), // but not equals
+                () -> assertThat(actual1).isEqualTo(value1),
+                () -> assertThat(actual2).isEqualTo(value2)
+        );
+    }
+
     @DisplayName("저장된 키의 목록을 조회한다.")
     @Test
     void keys() {
@@ -158,5 +187,25 @@ class LinearProbingHashTableTest {
 
         // then
         assertThat(values).containsExactlyInAnyOrder(value1, value2, value2);
+    }
+
+    private static class FixedHashKey {
+
+        final int value;
+
+        private FixedHashKey(final int value) {
+            this.value = value;
+        }
+
+        @Override
+        public int hashCode() {
+            return 0;
+        }
+
+        @Override
+        public boolean equals(final Object o) {
+            final FixedHashKey fixedHashKey = (FixedHashKey) o;
+            return value == fixedHashKey.value;
+        }
     }
 }
