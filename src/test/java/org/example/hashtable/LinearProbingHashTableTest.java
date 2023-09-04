@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class LinearProbingHashTableTest {
 
-    @DisplayName("해시 테이블에 키와 값 저장")
+    @DisplayName("키와 값 저장")
     @Nested
     class put {
 
@@ -39,6 +39,42 @@ class LinearProbingHashTableTest {
 
             // then
             assertThat(hashTable.size()).isOne();
+        }
+    }
+
+    @DisplayName("키에 해당하는 값 조회")
+    @Nested
+    class get {
+
+        @DisplayName("할 수 있다.")
+        @Test
+        void success() {
+            // given
+            final LinearProbingHashTable<String, String> hashTable = new LinearProbingHashTable<>();
+
+            final String key = "key";
+            final String expected = "value";
+
+            hashTable.put(key, expected);
+
+            // when
+            final String actual = hashTable.get(key);
+
+            // then
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @DisplayName("할 때, 존재하지 않는 키이면 null을 반환한다.")
+        @Test
+        void returnsNull_whenKeyDoesNotExist() {
+            // given
+            final LinearProbingHashTable<String, String> hashTable = new LinearProbingHashTable<>();
+
+            // when
+            final String actual = hashTable.get("key");
+
+            // then
+            assertThat(actual).isNull();
         }
     }
 }

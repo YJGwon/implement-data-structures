@@ -18,10 +18,9 @@ public class LinearProbingHashTable<K, V> implements HashTable<K, V> {
 
     @Override
     public void put(final K key, final V value) {
-        final int hash = Objects.hash(key) % bucket.length;
         final Entry<K, V> entryToAdd = new Entry<>(key, value);
 
-        int index = hash;
+        int index = Objects.hash(key) % bucket.length;
         while (index < bucket.length) {
             final Entry<K, V> entry = bucket[index];
             if (entry == null) {
@@ -35,6 +34,7 @@ public class LinearProbingHashTable<K, V> implements HashTable<K, V> {
             }
             index++;
         }
+        // TODO: check load factor and resize bucket
     }
 
     @Override
@@ -44,6 +44,19 @@ public class LinearProbingHashTable<K, V> implements HashTable<K, V> {
 
     @Override
     public V get(final K key) {
+        int index = Objects.hash(key) % bucket.length;
+        while (index < bucket.length) {
+            final Entry<K, V> entry = bucket[index];
+            if (entry == null) {
+                break;
+            }
+
+            if (entry.isKey(key)) {
+                return entry.getValue();
+            }
+            index++;
+        }
+
         return null;
     }
 
@@ -74,4 +87,6 @@ public class LinearProbingHashTable<K, V> implements HashTable<K, V> {
     private void overwriteValue(final Entry<K, V> entryToAdd, final int index) {
         bucket[index] = entryToAdd;
     }
+
+
 }
