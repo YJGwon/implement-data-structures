@@ -19,21 +19,11 @@ public class LinearProbingHashTable<K, V> implements HashTable<K, V> {
     @Override
     public void put(final K key, final V value) {
         final Entry<K, V> entryToAdd = new Entry<>(key, value);
-
-        int index = Objects.hash(key) % bucket.length;
-        while (index < bucket.length) {
-            final Entry<K, V> entry = bucket[index];
-            if (entry == null) {
-                addNewEntry(entryToAdd, index);
-                return;
-            }
-
-            if (entry.isKey(key)) {
-                overwriteValue(entryToAdd, index);
-                return;
-            }
-            index++;
+        final int availableIndex = findAvailableIndex(key);
+        if (bucket[availableIndex] == null) {
+            numberOfElements++;
         }
+        bucket[availableIndex] = entryToAdd;
         // TODO: check load factor and resize bucket
     }
 
@@ -44,20 +34,11 @@ public class LinearProbingHashTable<K, V> implements HashTable<K, V> {
 
     @Override
     public V get(final K key) {
-        int index = Objects.hash(key) % bucket.length;
-        while (index < bucket.length) {
-            final Entry<K, V> entry = bucket[index];
-            if (entry == null) {
-                break;
-            }
-
-            if (entry.isKey(key)) {
-                return entry.getValue();
-            }
-            index++;
+        final Entry<K, V> entry = bucket[findAvailableIndex(key)];
+        if (entry == null) {
+            return null;
         }
-
-        return null;
+        return entry.getValue();
     }
 
     @Override
@@ -79,14 +60,24 @@ public class LinearProbingHashTable<K, V> implements HashTable<K, V> {
         return numberOfElements;
     }
 
-    private void addNewEntry(final Entry<K, V> entryToAdd, final int index) {
-        bucket[index] = entryToAdd;
-        numberOfElements++;
+    // FIXME: may return bucket.length if no bucket available - but will be fixed after adding dynamic resizing
+    private int findAvailableIndex(final K key) {
+        int index = hash(key);
+        while (index < bucket.length) {
+            final Entry<K, V> entry = bucket[index];
+            if (entry == null) {
+                break;
+            }
+
+            if (entry.isKey(key)) {
+                return index;
+            }
+            index++;
+        }
+        return index;
     }
 
-    private void overwriteValue(final Entry<K, V> entryToAdd, final int index) {
-        bucket[index] = entryToAdd;
+    private int hash(final K key) {
+        return Objects.hash(key) % bucket.length;
     }
-
-
 }
