@@ -3,6 +3,8 @@ package org.example.hashtable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.Collection;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -116,5 +118,45 @@ class LinearProbingHashTableTest {
             // then
             assertThat(removed).isNull();
         }
+    }
+
+    @DisplayName("저장된 키의 목록을 조회한다.")
+    @Test
+    void keys() {
+        // given
+        final LinearProbingHashTable<String, String> hashTable = new LinearProbingHashTable<>();
+        final String key1 = "key1";
+        final String key2 = "key2";
+        final String key3 = "key3";
+
+        hashTable.put(key1, "value");
+        hashTable.put(key2, "value");
+        hashTable.put(key3, "value");
+
+        // when
+        final Set<String> keys = hashTable.keys();
+
+        // then
+        assertThat(keys).containsExactlyInAnyOrder(key1, key2, key3);
+    }
+
+    @DisplayName("저장된 값의 목록을 조회한다.")
+    @Test
+    void values() {
+        // given
+        final LinearProbingHashTable<String, String> hashTable = new LinearProbingHashTable<>();
+
+        final String value1 = "value1";
+        final String value2 = "value2";
+
+        hashTable.put("key1", value1);
+        hashTable.put("key2", value2);
+        hashTable.put("key3", value2);
+
+        // when
+        final Collection<String> values = hashTable.values();
+
+        // then
+        assertThat(values).containsExactlyInAnyOrder(value1, value2, value2);
     }
 }

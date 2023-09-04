@@ -1,8 +1,10 @@
 package org.example.hashtable;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LinearProbingHashTable<K, V> implements HashTable<K, V> {
 
@@ -51,17 +53,23 @@ public class LinearProbingHashTable<K, V> implements HashTable<K, V> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return numberOfElements == 0;
     }
 
     @Override
     public Set<K> keys() {
-        return null;
+        return Arrays.stream(bucket)
+                .filter(Objects::nonNull)
+                .map(Entry::getKey)
+                .collect(Collectors.toSet());
     }
 
     @Override
     public Collection<V> values() {
-        return null;
+        return Arrays.stream(bucket)
+                .filter(Objects::nonNull)
+                .map(Entry::getValue)
+                .collect(Collectors.toList());
     }
 
     public int size() {
