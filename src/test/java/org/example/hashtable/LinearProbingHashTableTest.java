@@ -1,6 +1,7 @@
 package org.example.hashtable;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -75,6 +76,45 @@ class LinearProbingHashTableTest {
 
             // then
             assertThat(actual).isNull();
+        }
+    }
+
+    @DisplayName("키에 해당하는 값 삭제")
+    @Nested
+    class remove {
+
+        @DisplayName("하면 삭제된 값을 반환한다.")
+        @Test
+        void success() {
+            // given
+            final LinearProbingHashTable<String, String> hashTable = new LinearProbingHashTable<>();
+
+            final String key = "key";
+            final String expected = "value";
+
+            hashTable.put(key, expected);
+
+            // when
+            final String removed = hashTable.remove(key);
+
+            // then
+            assertAll(
+                    () -> assertThat(removed).isEqualTo(expected),
+                    () -> assertThat(hashTable.size()).isZero()
+            );
+        }
+
+        @DisplayName("할 때, 존재하지 않는 키이면 null을 반환한다.")
+        @Test
+        void returnsNull_whenKeyDoesNotExist() {
+            // given
+            final LinearProbingHashTable<String, String> hashTable = new LinearProbingHashTable<>();
+
+            // when
+            final String removed = hashTable.remove("key");
+
+            // then
+            assertThat(removed).isNull();
         }
     }
 }

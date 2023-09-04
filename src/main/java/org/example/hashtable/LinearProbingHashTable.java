@@ -29,12 +29,20 @@ public class LinearProbingHashTable<K, V> implements HashTable<K, V> {
 
     @Override
     public V remove(final K key) {
-        return null;
+        final int targetIndex = findAvailableIndex(key);
+        final Entry<K, V> entryToRemove = bucket[targetIndex];
+        if (entryToRemove == null) {
+            return null;
+        }
+        bucket[targetIndex] = null;
+        numberOfElements--;
+        return entryToRemove.getValue();
     }
 
     @Override
     public V get(final K key) {
-        final Entry<K, V> entry = bucket[findAvailableIndex(key)];
+        final int targetIndex = findAvailableIndex(key);
+        final Entry<K, V> entry = bucket[targetIndex];
         if (entry == null) {
             return null;
         }
