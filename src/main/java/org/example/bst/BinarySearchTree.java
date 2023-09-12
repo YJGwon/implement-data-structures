@@ -1,5 +1,7 @@
 package org.example.bst;
 
+import java.util.Optional;
+
 public class BinarySearchTree<T extends Comparable<T>> {
 
     private BstNode<T> root;
@@ -20,6 +22,14 @@ public class BinarySearchTree<T extends Comparable<T>> {
         if (root.addChild(node)) {
             numberOfNodes++;
         }
+    }
+
+    public Optional<BstNode<T>> search(final T value) {
+        final BstNode<T> found = root.find(value);
+        if (found == BstNode.ofEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(found);
     }
 
     public boolean isEmpty() {

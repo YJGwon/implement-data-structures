@@ -4,9 +4,9 @@ public class BstNode<T extends Comparable<T>> {
 
     private static final BstNode EMPTY_NODE = new BstNode(null);
 
-    final T value;
-    BstNode<T> left;
-    BstNode<T> right;
+    private final T value;
+    private BstNode<T> left;
+    private BstNode<T> right;
 
     public BstNode(final T value) {
         this.value = value;
@@ -36,11 +36,46 @@ public class BstNode<T extends Comparable<T>> {
         return false;
     }
 
+    BstNode<T> find(final T value) {
+        if (this == EMPTY_NODE) {
+            return this;
+        }
+
+        if (this.isBiggerThan(value)) {
+            return left.find(value);
+        }
+        if (this.isSmallerThan(value)) {
+            return right.find(value);
+        }
+
+        return this;
+    }
+
     private boolean isBiggerThan(final BstNode<T> node) {
-        return this.value.compareTo(node.value) > 0;
+        return isBiggerThan(node.value);
     }
 
     private boolean isSmallerThan(final BstNode<T> node) {
-        return this.value.compareTo(node.value) < 0;
+        return isSmallerThan(node.value);
+    }
+
+    private boolean isBiggerThan(final T value) {
+        return this.value.compareTo(value) > 0;
+    }
+
+    private boolean isSmallerThan(final T value) {
+        return this.value.compareTo(value) < 0;
+    }
+
+    public T getValue() {
+        return value;
+    }
+
+    public BstNode<T> getLeft() {
+        return left;
+    }
+
+    public BstNode<T> getRight() {
+        return right;
     }
 }
