@@ -1,5 +1,8 @@
 package org.example.bst;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BstNode<T extends Comparable<T>> {
 
     private static final BstNode EMPTY_NODE = new BstNode(null);
@@ -49,6 +52,22 @@ public class BstNode<T extends Comparable<T>> {
         }
 
         return this;
+    }
+
+    List<T> getOrderedValues() {
+        final List<T> result = new ArrayList<>();
+        this.addValuesInOrder(result);
+        return List.copyOf(result);
+    }
+
+    private void addValuesInOrder(final List<T> values) {
+        if (this == EMPTY_NODE) {
+            return;
+        }
+
+        left.addValuesInOrder(values);
+        values.add(value);
+        right.addValuesInOrder(values);
     }
 
     private boolean isBiggerThan(final BstNode<T> node) {

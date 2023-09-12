@@ -1,5 +1,6 @@
 package org.example.bst;
 
+import java.util.List;
 import java.util.Optional;
 
 public class BinarySearchTree<T extends Comparable<T>> {
@@ -30,6 +31,10 @@ public class BinarySearchTree<T extends Comparable<T>> {
             return Optional.empty();
         }
         return Optional.of(found);
+    }
+
+    public List<T> getValues() {
+        return root.getOrderedValues();
     }
 
     public boolean isEmpty() {

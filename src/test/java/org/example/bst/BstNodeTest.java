@@ -3,6 +3,7 @@ package org.example.bst;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -116,5 +117,23 @@ class BstNodeTest {
             // then
             assertThat(found).isEqualTo(BstNode.ofEmpty());
         }
+    }
+
+    @DisplayName("해당 노드를 root로 하는 트리의 모든 정렬된 값을 조회할 수 있다.")
+    @Test
+    void getOrderedValues() {
+        // given
+        final BstNode<Integer> node = new BstNode<>(1);
+        node.addChild(new BstNode<>(-1));
+        node.addChild(new BstNode<>(2));
+        node.addChild(new BstNode<>(0));
+        node.addChild(new BstNode<>(3));
+        node.addChild(new BstNode<>(-2));
+
+        // when
+        final List<Integer> orderedValues = node.getOrderedValues();
+
+        // then
+        assertThat(orderedValues).containsExactly(-2, -1, 0, 1, 2, 3);
     }
 }

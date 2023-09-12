@@ -2,6 +2,7 @@ package org.example.bst;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -85,5 +86,25 @@ class BinarySearchTreeTest {
             // then
             assertThat(found).isEmpty();
         }
+    }
+
+    @DisplayName("트리에 포함된 모든 값을 조회하면 오름차순으로 정렬된 결과를 반환한다.")
+    @Test
+    void getValues_returnsOrderedValues() {
+        // given
+        final BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        bst.add(new BstNode<>(1));
+        bst.add(new BstNode<>(-1));
+        bst.add(new BstNode<>(3));
+        bst.add(new BstNode<>(0));
+        bst.add(new BstNode<>(4));
+        bst.add(new BstNode<>(-2));
+        bst.add(new BstNode<>(2));
+
+        // when
+        final List<Integer> values = bst.getValues();
+
+        // then
+        assertThat(values).containsExactly(-2, -1, 0, 1, 2, 3, 4);
     }
 }
