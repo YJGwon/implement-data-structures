@@ -27,7 +27,7 @@ class FlexibleStackTest {
     @Nested
     class pop {
 
-        @DisplayName("마지막에 삽입된 원소를 삭제하고 값을 반환한다.")
+        @DisplayName("하면 삭제된 값을 반환한다.")
         @Test
         void success() {
             // given
@@ -41,7 +41,7 @@ class FlexibleStackTest {
             assertThat(popped).isEqualTo("data");
         }
 
-        @DisplayName("빈 스택에서 원소를 삭제하면 예외가 발생한다.")
+        @DisplayName("할 때 스택이 비어있으면 예외가 발생한다.")
         @Test
         void throwsException_whenStackIsEmpty() {
             // given
@@ -57,7 +57,7 @@ class FlexibleStackTest {
     @Nested
     class peek {
 
-        @DisplayName("마지막에 삽입된 원소의 값을 조회한다.")
+        @DisplayName("할 수 있다.")
         @Test
         void success() {
             // given
@@ -71,7 +71,7 @@ class FlexibleStackTest {
             assertThat(peeked).isEqualTo("data");
         }
 
-        @DisplayName("빈 스택에서 원소를 조회하면 예외가 발생한다.")
+        @DisplayName("할 때 스택이 비어있으면 예외가 발생한다.")
         @Test
         void throwsException_whenStackIsEmpty() {
             // given

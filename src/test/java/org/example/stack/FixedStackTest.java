@@ -14,7 +14,7 @@ class FixedStackTest {
     @Nested
     class push {
 
-        @DisplayName("고정 크기 스택의 마지막에 원소를 삽입한다.")
+        @DisplayName("할 수 있다.")
         @Test
         void success() {
             // given
@@ -27,7 +27,7 @@ class FixedStackTest {
             assertThat(stack.size()).isOne();
         }
 
-        @DisplayName("스택이 가득 찬 상태에서 원소를 삽입하면 예외가 발생한다.")
+        @DisplayName("할 때 스택이 가득 차있으면 예외가 발생한다.")
         @Test
         void throwsException_whenStackIsFull() {
             // given
@@ -44,7 +44,7 @@ class FixedStackTest {
     @Nested
     class pop {
 
-        @DisplayName("마지막에 삽입된 원소를 삭제하고 값을 반환한다.")
+        @DisplayName("하면 삭제된 값을 반환한다.")
         @Test
         void success() {
             // given
@@ -59,7 +59,7 @@ class FixedStackTest {
             assertThat(popped).isEqualTo("data2");
         }
 
-        @DisplayName("빈 스택의 값을 삭제하면 예외가 발생한다..")
+        @DisplayName("할 때 스택이 비어있으면 예외가 발생한다.")
         @Test
         void throwsException_whenStackIsEmpty() {
             // given
@@ -75,7 +75,7 @@ class FixedStackTest {
     @Nested
     class peek {
 
-        @DisplayName("마지막에 삽임된 원소의 값을 조회한다.")
+        @DisplayName("할 수 있다.")
         @Test
         void success() {
             // given
@@ -90,7 +90,7 @@ class FixedStackTest {
             assertThat(peeked).isEqualTo("data2");
         }
 
-        @DisplayName("빈 스택의 값을 조회하면 예외가 발생한다..")
+        @DisplayName("할 때 스택이 비어있으면 예외가 발생한다.")
         @Test
         void throwsException_whenStackIsEmpty() {
             // given
