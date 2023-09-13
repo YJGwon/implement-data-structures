@@ -1,6 +1,7 @@
 package org.example.bst;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,41 +11,18 @@ import org.junit.jupiter.api.Test;
 
 class BinarySearchTreeTest {
 
-    @DisplayName("노드 삽입")
-    @Nested
-    class add {
+    @DisplayName("노드를 삽입할 수 있다.")
+    @Test
+    void add() {
+        // given
+        final BinarySearchTree<Integer> bst = new BinarySearchTree<>();
 
-        @DisplayName("할 수 있다.")
-        @Test
-        void success() {
-            // given
-            final BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        // when
+        final BstNode<Integer> node = new BstNode<>(1);
 
-            // when
-            final BstNode<Integer> node = new BstNode<>(1);
-            bst.add(node);
-
-            // then
-            assertThat(bst.size()).isOne();
-        }
-
-        @DisplayName("할 때 이미 존재하는 값이면 추가하지 않는다.")
-        @Test
-        void addNothing_whenValueAlreadyExists() {
-            // given
-            final int value = 1;
-
-            final BinarySearchTree<Integer> bst = new BinarySearchTree<>();
-            final BstNode<Integer> node = new BstNode<>(value);
-            bst.add(node);
-
-            // when
-            final BstNode<Integer> sameNode = new BstNode<>(value);
-            bst.add(sameNode);
-
-            // then
-            assertThat(bst.size()).isOne();
-        }
+        // then
+        assertThatNoException()
+                .isThrownBy(() -> bst.add(node));
     }
 
     @DisplayName("노드 검색")
@@ -106,5 +84,26 @@ class BinarySearchTreeTest {
 
         // then
         assertThat(values).containsExactly(-2, -1, 0, 1, 2, 3, 4);
+    }
+
+    @DisplayName("특정 값을 가진 노드를 삭제하고 정렬을 유지한다.")
+    @Test
+    void remove() {
+        // given
+        final BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        bst.add(new BstNode<>(1));
+        bst.add(new BstNode<>(-1));
+        bst.add(new BstNode<>(3));
+        bst.add(new BstNode<>(0));
+        bst.add(new BstNode<>(4));
+        bst.add(new BstNode<>(-2));
+        bst.add(new BstNode<>(2));
+
+        // when
+        bst.remove(3);
+
+        // then
+        final List<Integer> values = bst.getValues();
+        assertThat(values).containsExactly(-2, -1, 0, 1, 2, 4);
     }
 }

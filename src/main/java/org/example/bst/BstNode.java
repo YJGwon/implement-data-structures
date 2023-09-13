@@ -21,33 +21,34 @@ public class BstNode<T extends Comparable<T>> {
         return (BstNode<T>) EMPTY_NODE;
     }
 
-    boolean addChild(final BstNode<T> node) {
+    void addChild(final BstNode<T> node) {
         if (this.isBiggerThan(node)) {
-            if (left == EMPTY_NODE) {
+            if (left.isEmpty()) {
                 left = node;
+                return;
             }
-            return left.addChild(node);
+            left.addChild(node);
+            return;
         }
 
         if (this.isSmallerThan(node)) {
-            if (right == EMPTY_NODE) {
+            if (right.isEmpty()) {
                 right = node;
+                return;
             }
-            return right.addChild(node);
+            right.addChild(node);
         }
-
-        return false;
     }
 
     BstNode<T> find(final T value) {
-        if (this == EMPTY_NODE) {
+        if (isEmpty()) {
             return this;
         }
 
-        if (this.isBiggerThan(value)) {
+        if (this.isValueBiggerThan(value)) {
             return left.find(value);
         }
-        if (this.isSmallerThan(value)) {
+        if (this.isValueSmallerThan(value)) {
             return right.find(value);
         }
 
@@ -60,8 +61,38 @@ public class BstNode<T extends Comparable<T>> {
         return List.copyOf(result);
     }
 
+    BstNode<T> removeAndGetResult(final T value) {
+        if (isEmpty()) {
+            return this;
+        }
+
+        if (isValueBiggerThan(value)) {
+            left = left.removeAndGetResult(value);
+            return this;
+        }
+
+        if (isValueSmallerThan(value)) {
+            right = right.removeAndGetResult(value);
+            return this;
+        }
+
+        if (left.isEmpty()) {
+            return right;
+        }
+
+        if (right.isEmpty()) {
+            return left;
+        }
+
+        return removeAndGetReplacingNode();
+    }
+
+    boolean isEmpty() {
+        return this == EMPTY_NODE;
+    }
+
     private void addValuesInOrder(final List<T> values) {
-        if (this == EMPTY_NODE) {
+        if (isEmpty()) {
             return;
         }
 
@@ -70,19 +101,33 @@ public class BstNode<T extends Comparable<T>> {
         right.addValuesInOrder(values);
     }
 
+    private BstNode<T> removeAndGetReplacingNode() {
+        final BstNode<T> replacingNode = left.findBiggestChild();
+        replacingNode.left = left.removeAndGetResult(replacingNode.getValue());
+        replacingNode.right = right;
+        return replacingNode;
+    }
+
+    private BstNode<T> findBiggestChild() {
+        if (right.isEmpty()) {
+            return this;
+        }
+        return right.findBiggestChild();
+    }
+
     private boolean isBiggerThan(final BstNode<T> node) {
-        return isBiggerThan(node.value);
+        return isValueBiggerThan(node.value);
     }
 
     private boolean isSmallerThan(final BstNode<T> node) {
-        return isSmallerThan(node.value);
+        return isValueSmallerThan(node.value);
     }
 
-    private boolean isBiggerThan(final T value) {
+    private boolean isValueBiggerThan(final T value) {
         return this.value.compareTo(value) > 0;
     }
 
-    private boolean isSmallerThan(final T value) {
+    private boolean isValueSmallerThan(final T value) {
         return this.value.compareTo(value) < 0;
     }
 

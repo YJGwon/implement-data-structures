@@ -50,13 +50,12 @@ class BstNodeTest {
             final BstNode<Integer> sameNode = new BstNode<>(1);
 
             // when
-            final boolean hasAdded = node.addChild(sameNode);
+            node.addChild(sameNode);
 
             // then
             assertAll(
                     () -> assertThat(node.getLeft()).isEqualTo(BstNode.ofEmpty()),
-                    () -> assertThat(node.getRight()).isEqualTo(BstNode.ofEmpty()),
-                    () -> assertThat(hasAdded).isFalse()
+                    () -> assertThat(node.getRight()).isEqualTo(BstNode.ofEmpty())
             );
         }
 
@@ -135,5 +134,77 @@ class BstNodeTest {
 
         // then
         assertThat(orderedValues).containsExactly(-2, -1, 0, 1, 2, 3);
+    }
+
+    @DisplayName("노드 삭제")
+    @Nested
+    class remove {
+
+        @DisplayName("할 때, 자식 노드가 없으면 빈 노드로 대체한다.")
+        @Test
+        void replaceWithEmptyNode_whenHasNoSubtree() {
+            // given
+            final BstNode<Integer> removingNode = new BstNode<>(1);
+
+            // when
+            final BstNode<Integer> result = removingNode.removeAndGetResult(1);
+
+            // then
+            assertThat(result.isEmpty()).isTrue();
+        }
+
+        @DisplayName("할 때, 오른쪽 자식 노드가 없으면 왼쪽 자식 노드로 대체한다.")
+        @Test
+        void replaceWithLeftChild_whenHasNoRightChild() {
+            // given
+            final BstNode<Integer> removingNode = new BstNode<>(1);
+            final BstNode<Integer> leftChild = new BstNode<>(0);
+            removingNode.addChild(leftChild);
+
+            // when
+            final BstNode<Integer> result = removingNode.removeAndGetResult(1);
+
+            // then
+            assertThat(result).isEqualTo(leftChild);
+        }
+
+        @DisplayName("할 때, 왼쪽 자식 노드가 없으면 오른쪽 자식 노드로 대체한다.")
+        @Test
+        void replaceWithRightChild_whenHasNoLeftChild() {
+            // given
+            final BstNode<Integer> removingNode = new BstNode<>(1);
+            final BstNode<Integer> rightChild = new BstNode<>(2);
+            removingNode.addChild(rightChild);
+
+            // when
+            final BstNode<Integer> result = removingNode.removeAndGetResult(1);
+
+            // then
+            assertThat(result).isEqualTo(rightChild);
+        }
+
+        @DisplayName("할 때, 양 쪽에 자식 노드가 있으면 왼쪽 서브트리의 가장 큰 노드로 대체한다.")
+        @Test
+        void replaceWithBiggestLeftChild_whenHasBothChild() {
+            // given
+            final BstNode<Integer> removingNode = new BstNode<>(1);
+            final BstNode<Integer> biggestLeftChild = new BstNode<>(0);
+
+            removingNode.addChild(new BstNode<>(-1));
+            removingNode.addChild(new BstNode<>(2));
+            removingNode.addChild(biggestLeftChild);
+            removingNode.addChild(new BstNode<>(3));
+            removingNode.addChild(new BstNode<>(-2));
+
+            // when
+            final BstNode<Integer> result = removingNode.removeAndGetResult(1);
+
+            // then
+            assertAll(
+                    () -> assertThat(result).isEqualTo(biggestLeftChild),
+                    () -> assertThat(result.getLeft()).isEqualTo(removingNode.getLeft()),
+                    () -> assertThat(result.getRight()).isEqualTo(removingNode.getRight())
+            );
+        }
     }
 }
